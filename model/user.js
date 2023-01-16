@@ -3,6 +3,7 @@ const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
     default: null,
+    required: true,
     min: 3,
     max: 20,
   },
@@ -14,10 +15,12 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    required: true,
     unique: true,
   },
   password: {
     type: String,
+    required: true,
   },
   token: {
     type: String,
