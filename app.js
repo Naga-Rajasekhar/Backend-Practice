@@ -3,9 +3,16 @@ const User = require("./model/user");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
+
+//custom middleware importing
+
+const auth = require("./middleware/auth");
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // used for forms
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to Ineuron</h1>");
@@ -102,6 +109,16 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+app.get("/dashboard", (req, auth, res) => {
+  res.send("Welcome to dashboard");
+});
+
+app.get("/profile", (req, auth, res) => {
+  //access to req.user = id, email
+  //based on id, query the DB and get all information of user - findOne({id})
+  //send a json response with all data
 });
 
 module.exports = app;
